@@ -103,7 +103,7 @@ public class MainGameLoop {
 		Loader loader = new Loader();
 		
 		RawModel rawModel = loader.loadToVAO(vertices, indices, textureCoordinates);
-		ModelTexture texture = new ModelTexture(loader.loadTexture("image"));
+		ModelTexture texture = new ModelTexture(loader.loadTexture("dog"));
 		TexturedModel texturedModel = new TexturedModel(rawModel, texture);
 		
 		Entity entity = new Entity(texturedModel, new Vector3f(0, 0, -5), 0, 0, 0, 1);
