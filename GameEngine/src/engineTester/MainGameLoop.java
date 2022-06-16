@@ -25,7 +25,7 @@ public class MainGameLoop {
 		DisplayManager.createDisplay();
 		Loader loader = new Loader();
 		
-		RawModel rawModel = OBJLoader.loadObjModel("cube", loader);
+		RawModel rawModel = OBJLoader.loadObjModel("rainbowCube", loader);
 		TexturedModel texturedModel = new TexturedModel(rawModel, new ModelTexture(loader.loadTexture("rainbow")));
 		
 		ModelTexture texture = texturedModel.getTexture();
