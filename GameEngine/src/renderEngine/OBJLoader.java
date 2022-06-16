@@ -93,7 +93,7 @@ public class OBJLoader {
 			indicesArray[i] = indices.get(i);
 		}
 		
-		return loader.loadToVAO(verticesArray, textureArray, indicesArray);
+		return loader.loadToVAO(verticesArray, textureArray, normalsArray, indicesArray);
 		
 	}
 	
