@@ -17,7 +17,7 @@ public class OBJLoader {
 	public static RawModel loadObjModel(String fileName, Loader loader) {
 		FileReader fr = null;
 		try {
-			fr = new FileReader(new File("res/" + fileName + ".obj"));
+			fr = new FileReader(new File("res/objs/" + fileName + ".obj"));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
