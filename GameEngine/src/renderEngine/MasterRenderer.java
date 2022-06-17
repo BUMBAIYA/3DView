@@ -93,7 +93,6 @@ public class MasterRenderer {
 		GL11.glClearColor(RED, GREEN, BLUE, 1);
 	}
 	
-	
 	private void createProjectionMatrix() {
 		float aspectRatio = (float) Display.getWidth() / (float) Display.getHeight();
 		float y_scale = (float) ((1f / Math.tan(Math.toRadians(FOV / 2f))) * aspectRatio);
