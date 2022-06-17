@@ -19,6 +19,8 @@ import renderEngine.Loader;
 import renderEngine.MasterRenderer;
 import terrains.Terrain;
 import textures.ModelTexture;
+import textures.TerrainTexture;
+import textures.TerrainTexturePack;
 
 public class MainGameLoop {
 
@@ -26,6 +28,14 @@ public class MainGameLoop {
 		
 		DisplayManager.createDisplay();
 		Loader loader = new Loader();
+		
+		TerrainTexture backgroundTexture = new TerrainTexture(loader.loadTexture("Grassy2"));
+		TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("mud"));
+		TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("grassFlowers"));
+		TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("path"));
+		TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("blendMap"));
+		
+		TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
 		
 		ModelData flowerData = OBJFileLoader.loadOBJ("flower");
 		RawModel flowerModel = loader.loadToVAO(flowerData.getVertices(), flowerData.getTextureCoords(), flowerData.getNormals(), flowerData.getIndices());
@@ -48,7 +58,7 @@ public class MainGameLoop {
 		List<Entity> entities = new ArrayList<Entity>();
 		Random random = new Random();
 		
-		for (int i = 0; i < 500; i++) {
+		for (int i = 0; i < 400; i++) {
 			entities.add(new Entity(flower, new Vector3f(random.nextFloat() * 800 -400, 0, random.nextFloat() * -600), 0, random.nextFloat() * 180, 0, random.nextFloat() * 2));
 			entities.add(new Entity(grass, new Vector3f(random.nextFloat() * 800 -400, 0, random.nextFloat() * -600), 0, 0, 0, 1));
 			entities.add(new Entity(fern, new Vector3f(random.nextFloat() * 800 -400, 0, random.nextFloat() * -600), 0, random.nextFloat() * 180, 0, 0.6f));
@@ -56,8 +66,8 @@ public class MainGameLoop {
 		
 		Light light = new Light(new Vector3f(20000, 20000, 2000), new Vector3f(1, 1, 1));
 		
-		Terrain terrain = new Terrain(0, -1, loader, new ModelTexture(loader.loadTexture("grass")));
-		Terrain terrain2 = new Terrain(-1, -1, loader, new ModelTexture(loader.loadTexture("grass")));
+		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap);
+		Terrain terrain2 = new Terrain(-1, -1, loader, texturePack, blendMap);
 		
 		Camera camera = new Camera();
 		
