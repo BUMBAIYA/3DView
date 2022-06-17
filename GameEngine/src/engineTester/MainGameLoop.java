@@ -10,6 +10,7 @@ import org.lwjgl.util.vector.Vector3f;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
+import entities.Player;
 import models.RawModel;
 import models.TexturedModel;
 import objConverter.ModelData;
@@ -73,9 +74,16 @@ public class MainGameLoop {
 		
 		MasterRenderer renderer = new MasterRenderer();
 		
+		ModelData playerData = OBJFileLoader.loadOBJ("bunny");
+		RawModel playerModel = loader.loadToVAO(playerData.getVertices(), playerData.getTextureCoords(), playerData.getNormals(), playerData.getIndices());
+		TexturedModel playerTexturedModel = new TexturedModel(playerModel, new ModelTexture(loader.loadTexture("yellow")));
+		
+		Player player = new Player(playerTexturedModel, new Vector3f(100, 0, -50), 0, 0, 0, 1);
+		
 		while (!Display.isCloseRequested()) {
 			camera.move();
-		
+			player.move();
+			renderer.processEntity(player);
 			renderer.processTerrain(terrain);
 			renderer.processTerrain(terrain2);
 			for (Entity entity: entities) {
