@@ -5,12 +5,15 @@ import java.util.List;
 import java.util.Random;
 
 import org.lwjgl.opengl.Display;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
 import entities.Player;
+import gui.GuiRenderer;
+import gui.GuiTexture;
 import models.RawModel;
 import models.TexturedModel;
 import objConverter.ModelData;
@@ -87,6 +90,14 @@ public class MainGameLoop {
 		Player player = new Player(playerTexturedModel, new Vector3f(100, 5, -50), 0, 0, 0, 1);
 		Camera camera = new Camera(player);
 		
+		List<GuiTexture> guis = new ArrayList<GuiTexture>();
+		GuiTexture gui = new GuiTexture(loader.loadTexture("socuwan"), new Vector2f(0.5f, 0.5f), new Vector2f(0.25f, 0.25f));
+		GuiTexture gui2 = new GuiTexture(loader.loadTexture("thinmatrix"), new Vector2f(0.30f, 0.60f), new Vector2f(0.4f, 0.4f));
+		guis.add(gui2);
+		guis.add(gui);
+		
+		GuiRenderer guiRenderer = new GuiRenderer(loader);
+		
 		while (!Display.isCloseRequested()) {
 			player.move(terrain);
 			camera.move();
@@ -97,9 +108,10 @@ public class MainGameLoop {
 			}
 			
 			renderer.render(light, camera);
+			guiRenderer.render(guis);
 			DisplayManager.updateDisplay();
 		}
-		
+		guiRenderer.cleanUp();
 		renderer.cleanUp();
 		loader.cleanUp();
 		
