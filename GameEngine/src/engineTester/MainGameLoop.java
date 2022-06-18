@@ -59,7 +59,7 @@ public class MainGameLoop {
 		List<Entity> entities = new ArrayList<Entity>();
 		Random random = new Random();
 		
-		for (int i = 0; i < 400; i++) {
+		for (int i = 0; i < 300; i++) {
 			entities.add(new Entity(flower, new Vector3f(random.nextFloat() * 800 -400, 0, random.nextFloat() * -600), 0, random.nextFloat() * 180, 0, random.nextFloat() * 2));
 			entities.add(new Entity(grass, new Vector3f(random.nextFloat() * 800 -400, 0, random.nextFloat() * -600), 0, 0, 0, 1));
 			entities.add(new Entity(fern, new Vector3f(random.nextFloat() * 800 -400, 0, random.nextFloat() * -600), 0, random.nextFloat() * 180, 0, 0.6f));
@@ -67,24 +67,22 @@ public class MainGameLoop {
 		
 		Light light = new Light(new Vector3f(20000, 20000, 2000), new Vector3f(1, 1, 1));
 		
-		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap);
-		Terrain terrain2 = new Terrain(-1, -1, loader, texturePack, blendMap);
+		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap, "heightmap");
 		
 		MasterRenderer renderer = new MasterRenderer();
 		
 		ModelData playerData = OBJFileLoader.loadOBJ("rainbowCube");
 		RawModel playerModel = loader.loadToVAO(playerData.getVertices(), playerData.getTextureCoords(), playerData.getNormals(), playerData.getIndices());
-		TexturedModel playerTexturedModel = new TexturedModel(playerModel, new ModelTexture(loader.loadTexture("yellow")));
+		TexturedModel playerTexturedModel = new TexturedModel(playerModel, new ModelTexture(loader.loadTexture("rainbow")));
 		
 		Player player = new Player(playerTexturedModel, new Vector3f(100, 5, -50), 0, 0, 0, 1);
 		Camera camera = new Camera(player);
 		
 		while (!Display.isCloseRequested()) {
+			player.move(terrain);
 			camera.move();
-			player.move();
 			renderer.processEntity(player);
 			renderer.processTerrain(terrain);
-			renderer.processTerrain(terrain2);
 			for (Entity entity: entities) {
 				renderer.processEntity(entity);
 			}
