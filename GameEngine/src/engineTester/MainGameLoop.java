@@ -38,7 +38,7 @@ public class MainGameLoop {
 		
 		TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
 		
-		ModelData flowerData = OBJFileLoader.loadOBJ("flower");
+		ModelData flowerData = OBJFileLoader.loadOBJ("singleFlowerobj");
 		RawModel flowerModel = loader.loadToVAO(flowerData.getVertices(), flowerData.getTextureCoords(), flowerData.getNormals(), flowerData.getIndices());
 		
 		ModelData grassData = OBJFileLoader.loadOBJ("grassModel");
@@ -49,7 +49,9 @@ public class MainGameLoop {
 		
 		TexturedModel flower = new TexturedModel(flowerModel, new ModelTexture(loader.loadTexture("flower")));
 		TexturedModel grass = new TexturedModel(grassModel, new ModelTexture(loader.loadTexture("grassTexture")));
-		TexturedModel fern = new TexturedModel(fernModel, new ModelTexture(loader.loadTexture("fern")));
+		ModelTexture fernTexture = new ModelTexture(loader.loadTexture("fernTextureAtlas"));
+		fernTexture.setNumberOfRows(2);
+		TexturedModel fern = new TexturedModel(fernModel, fernTexture);
 		flower.getTexture().setHasTransparency(true);
 		flower.getTexture().setUseFakeLighting(true);
 		grass.getTexture().setHasTransparency(true);
@@ -65,9 +67,15 @@ public class MainGameLoop {
 			float x = random.nextFloat() * 800 - 400;
 			float z = random.nextFloat() * -600; 
 			float y = terrain.getHeightOfTerrain(x, z);
-			entities.add(new Entity(flower, new Vector3f(x, y, z), 0, random.nextFloat() * 360, 0, random.nextFloat() * 2));
 			entities.add(new Entity(grass, new Vector3f(x, y, z), 0, 0, 0, 1));
-			entities.add(new Entity(fern, new Vector3f(x, y, z), 0, random.nextFloat() * 360, 0, 0.6f));
+			entities.add(new Entity(fern, random.nextInt(4),new Vector3f(x, y, z), 0, random.nextFloat() * 360, 0, 0.6f));
+		}
+		
+		for (int i =0; i < 1000; i++) {
+			float x = random.nextFloat() * 800 - 400;
+			float z = random.nextFloat() * -600; 
+			float y = terrain.getHeightOfTerrain(x, z);
+			entities.add(new Entity(flower, new Vector3f(x, y, z), 0, random.nextFloat() * 360, 0, random.nextFloat() * 2));
 		}
 		
 		MasterRenderer renderer = new MasterRenderer();
