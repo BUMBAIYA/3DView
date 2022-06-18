@@ -57,17 +57,18 @@ public class MainGameLoop {
 		fern.getTexture().setHasTransparency(true);
 		
 		List<Entity> entities = new ArrayList<Entity>();
-		Random random = new Random();
+		Random random = new Random(676452);
+		Light light = new Light(new Vector3f(20000, 20000, 2000), new Vector3f(1, 1, 1));
+		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap, "heightmap");
 		
 		for (int i = 0; i < 300; i++) {
-			entities.add(new Entity(flower, new Vector3f(random.nextFloat() * 800 -400, 0, random.nextFloat() * -600), 0, random.nextFloat() * 180, 0, random.nextFloat() * 2));
-			entities.add(new Entity(grass, new Vector3f(random.nextFloat() * 800 -400, 0, random.nextFloat() * -600), 0, 0, 0, 1));
-			entities.add(new Entity(fern, new Vector3f(random.nextFloat() * 800 -400, 0, random.nextFloat() * -600), 0, random.nextFloat() * 180, 0, 0.6f));
+			float x = random.nextFloat() * 800 - 400;
+			float z = random.nextFloat() * -600; 
+			float y = terrain.getHeightOfTerrain(x, z);
+			entities.add(new Entity(flower, new Vector3f(x, y, z), 0, random.nextFloat() * 360, 0, random.nextFloat() * 2));
+			entities.add(new Entity(grass, new Vector3f(x, y, z), 0, 0, 0, 1));
+			entities.add(new Entity(fern, new Vector3f(x, y, z), 0, random.nextFloat() * 360, 0, 0.6f));
 		}
-		
-		Light light = new Light(new Vector3f(20000, 20000, 2000), new Vector3f(1, 1, 1));
-		
-		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap, "heightmap");
 		
 		MasterRenderer renderer = new MasterRenderer();
 		
