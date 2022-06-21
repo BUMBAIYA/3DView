@@ -66,17 +66,17 @@ public class MainGameLoop {
 		Light light = new Light(new Vector3f(20000, 20000, 2000), new Vector3f(1, 1, 1));
 		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap, "heightmap");
 		
-		for (int i = 0; i < 300; i++) {
-			float x = random.nextFloat() * 800 - 400;
-			float z = random.nextFloat() * -600; 
+		for (int i = 0; i < 100; i++) {
+			float x = random.nextFloat() * 250;
+			float z = random.nextFloat() * -250; 
 			float y = terrain.getHeightOfTerrain(x, z);
 			entities.add(new Entity(grass, new Vector3f(x, y, z), 0, 0, 0, 1));
 			entities.add(new Entity(fern, random.nextInt(4),new Vector3f(x, y, z), 0, random.nextFloat() * 360, 0, 0.6f));
 		}
 		
-		for (int i =0; i < 1000; i++) {
-			float x = random.nextFloat() * 800 - 400;
-			float z = random.nextFloat() * -600; 
+		for (int i =0; i < 500; i++) {
+			float x = random.nextFloat() * 250;
+			float z = random.nextFloat() * -250; 
 			float y = terrain.getHeightOfTerrain(x, z);
 			entities.add(new Entity(flower, new Vector3f(x, y, z), 0, random.nextFloat() * 360, 0, random.nextFloat() * 2));
 		}
@@ -90,14 +90,6 @@ public class MainGameLoop {
 		Player player = new Player(playerTexturedModel, new Vector3f(100, 5, -50), 0, 0, 0, 1);
 		Camera camera = new Camera(player);
 		
-		List<GuiTexture> guis = new ArrayList<GuiTexture>();
-		GuiTexture gui = new GuiTexture(loader.loadTexture("socuwan"), new Vector2f(0.5f, 0.5f), new Vector2f(0.25f, 0.25f));
-		GuiTexture gui2 = new GuiTexture(loader.loadTexture("thinmatrix"), new Vector2f(0.30f, 0.60f), new Vector2f(0.4f, 0.4f));
-		guis.add(gui2);
-		guis.add(gui);
-		
-		GuiRenderer guiRenderer = new GuiRenderer(loader);
-		
 		while (!Display.isCloseRequested()) {
 			player.move(terrain);
 			camera.move();
@@ -108,10 +100,9 @@ public class MainGameLoop {
 			}
 			
 			renderer.render(light, camera);
-			guiRenderer.render(guis);
 			DisplayManager.updateDisplay();
 		}
-		guiRenderer.cleanUp();
+		
 		renderer.cleanUp();
 		loader.cleanUp();
 		
