@@ -5,15 +5,12 @@ import java.util.List;
 import java.util.Random;
 
 import org.lwjgl.opengl.Display;
-import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
 import entities.Player;
-import gui.GuiRenderer;
-import gui.GuiTexture;
 import models.RawModel;
 import models.TexturedModel;
 import objConverter.ModelData;
@@ -63,7 +60,10 @@ public class MainGameLoop {
 		
 		List<Entity> entities = new ArrayList<Entity>();
 		Random random = new Random(676452);
-		Light light = new Light(new Vector3f(20000, 20000, 2000), new Vector3f(1, 1, 1));
+		List<Light> lights = new ArrayList<Light>();
+		lights.add(new Light(new Vector3f(0, 10000, -7000), new Vector3f(1, 1, 1)));
+		lights.add(new Light(new Vector3f(-200, 10, -200), new Vector3f(10, 0, 0)));
+		lights.add(new Light(new Vector3f(200, 10, 200), new Vector3f(0, 0, 10)));
 		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap, "heightmap");
 		
 		for (int i = 0; i < 100; i++) {
@@ -99,7 +99,7 @@ public class MainGameLoop {
 				renderer.processEntity(entity);
 			}
 			
-			renderer.render(light, camera);
+			renderer.render(lights, camera);
 			DisplayManager.updateDisplay();
 		}
 		
