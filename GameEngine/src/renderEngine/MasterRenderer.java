@@ -20,7 +20,7 @@ import terrains.Terrain;
 
 public class MasterRenderer {
 	private static final float FOV = 70;
-	private static final float NEAR_PLANE = 0.1f;
+	private static final float NEAR_PLANE = 0.4f;
 	private static final float FAR_PLANE = 1000;
 	
 	private static final float RED = 0.5444f;
@@ -59,6 +59,16 @@ public class MasterRenderer {
 	
 	public static void disableCulling() {
 		GL11.glDisable(GL11.GL_CULL_FACE);
+	}
+	
+	public void renderScene(List<Entity> entities, List<Terrain> terrains, List<Light> lights, Camera camera) {
+		for (Terrain terrain: terrains) {
+			processTerrain(terrain);
+		}
+		for (Entity entity: entities) {
+			processEntity(entity);
+		}
+		render(lights, camera);
 	}
 	
 	public void render(List<Light> lights, Camera camera) {

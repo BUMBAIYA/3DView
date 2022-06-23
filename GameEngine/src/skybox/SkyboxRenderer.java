@@ -10,7 +10,6 @@ import entities.Camera;
 import models.RawModel;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
-import renderEngine.MasterRenderer;
 
 public class SkyboxRenderer {
 	
@@ -61,18 +60,18 @@ private static final float SIZE = 500f;
 	};
 	
 	private static String[] TEXTURE_FILES = {"right", "left", "top", "bottom", "back", "front"};
-	private static String[] NIGHT_TEXTURE_FILES = {"nightRight", "nightLeft", "nightTop", "nightBottom", "nightBack", "nightFront"};
+//	private static String[] NIGHT_TEXTURE_FILES = {"nightRight", "nightLeft", "nightTop", "nightBottom", "nightBack", "nightFront"};
 	
 	private RawModel cube;
 	private int texture;
-	private int nightTexture;
+//	private int nightTexture;
 	private SkyboxShader shader;
-	private float time = 0;
+//	private float time = 0;
 	
 	public SkyboxRenderer(Loader loader, Matrix4f projectionMatrix) {
 		cube = loader.loadToVAO(VERTICES, 3);
 		texture = loader.loadCubeMap(TEXTURE_FILES);
-		nightTexture = loader.loadCubeMap(NIGHT_TEXTURE_FILES);
+//		nightTexture = loader.loadCubeMap(NIGHT_TEXTURE_FILES);
 		shader = new SkyboxShader();
 		shader.start();
 		shader.connectTextureUnits();
@@ -94,16 +93,16 @@ private static final float SIZE = 500f;
 	}
 	
 	private void bindTextures() {
-		time += DisplayManager.getFrameTimeSeconds() * 1000;
-		time %= 24000;
-		float blendFactor = -((time/1000f)-13)*((time/1000f)-13) * 0.02f + 1;
-		if(blendFactor < 0) blendFactor = 0;
+//		time += DisplayManager.getFrameTimeSeconds() * 1000;
+//		time %= 24000;
+//		float blendFactor = -((time/1000f)-13)*((time/1000f)-13) * 0.02f + 1;
+//		if(blendFactor < 0) blendFactor = 0;
 		
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP, texture);
-		GL13.glActiveTexture(GL13.GL_TEXTURE1);
-		GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP, nightTexture);
-		shader.loadBlendFactor(blendFactor);
+//		GL13.glActiveTexture(GL13.GL_TEXTURE1);
+//		GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP, nightTexture);
+		shader.loadBlendFactor(0);
 	}
 
 }

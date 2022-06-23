@@ -23,7 +23,7 @@ public class DisplayManager {
 		
 		try {
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
-			Display.create(new PixelFormat(), attribs);
+			Display.create(new PixelFormat().withDepthBits(24), attribs);
 			Display.setTitle("Game Engine");
 		} catch (LWJGLException e) {
 			// TODO Auto-generated catch block

@@ -21,7 +21,9 @@ import terrains.Terrain;
 import textures.ModelTexture;
 import textures.TerrainTexture;
 import textures.TerrainTexturePack;
-import toolbox.MousePicker;
+import water.WaterRenderer;
+import water.WaterShader;
+import water.WaterTile;
 
 public class MainGameLoop {
 
@@ -55,7 +57,9 @@ public class MainGameLoop {
 		Entity lampEntity = new Entity(lamp, new Vector3f(100, -4.2f, -100), 0, 0, 0, 1);
 		entities.add(lampEntity);
 		
+		List<Terrain> terrains = new ArrayList<Terrain>();
 		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap, "heightmap");
+		terrains.add(terrain);
 		
 		MasterRenderer renderer = new MasterRenderer(loader);
 		
@@ -64,31 +68,26 @@ public class MainGameLoop {
 		TexturedModel playerTexturedModel = new TexturedModel(playerModel, new ModelTexture(loader.loadTexture("rainbow")));
 		
 		Player player = new Player(playerTexturedModel, new Vector3f(100, 5, -50), 0, 0, 0, 1);
+		entities.add(player);
 		Camera camera = new Camera(player);
 		
-		MousePicker picker = new MousePicker(camera, renderer.getProjectionMatrix(), terrain);
+		WaterShader waterShader = new WaterShader();
+		List<WaterTile> waters = new ArrayList<WaterTile>();
+		waters.add(new WaterTile(75, -75, 0));
+		WaterRenderer waterRenderer = new WaterRenderer(loader, waterShader, renderer.getProjectionMatrix(), waters);
+		
 		
 		while (!Display.isCloseRequested()) {
 			player.move(terrain);
 			camera.move();
 			
-			picker.update();
-			Vector3f terrainPoint = picker.getCurrentTerrainPoint();
-			if (terrainPoint!=null) {
-				lampEntity.setPosition(terrainPoint);
-				light.setPosition(new Vector3f(terrainPoint.x, terrainPoint.y + 15, terrainPoint.z));
-			}
+			renderer.renderScene(entities, terrains, lights, camera);
+			waterRenderer.render(waters, camera);
 			
-			renderer.processEntity(player);
-			renderer.processTerrain(terrain);
-			for (Entity entity: entities) {
-				renderer.processEntity(entity);
-			}
-			
-			renderer.render(lights, camera);
 			DisplayManager.updateDisplay();
 		}
 		
+		waterShader.cleanUp();
 		renderer.cleanUp();
 		loader.cleanUp();
 		
