@@ -13,6 +13,9 @@ public class Camera {
 	private float yaw = 0;
 	private float roll;
 	
+	private float ZOOM_NEAR = 20.0f;
+	private float ZOOM_FAR = 70.0f;
+	
 	private Player player;
 	
 	public Camera(Player player) {
@@ -69,12 +72,24 @@ public class Camera {
 	private void calculateZoom() {
 		float zoomLevel = Mouse.getDWheel() * 0.1f;
 		distanceFromPlayer -= zoomLevel;
+		if (distanceFromPlayer < ZOOM_NEAR) {
+			distanceFromPlayer = ZOOM_NEAR;
+		}
+		if (distanceFromPlayer > ZOOM_FAR) {
+			distanceFromPlayer = ZOOM_FAR;
+		}
 	}
 	
 	private void calculatePitch() {
 		if (Mouse.isButtonDown(1)) {
 			float pitchChange = Mouse.getDY() * 0.1f;
 			pitch -= pitchChange;
+			if (pitch < 10.0f) {
+				pitch = 10.0f;
+			}
+			if (pitch > 90.0f) {
+				pitch = 90.0f;
+			}
 		}
 	}
 	

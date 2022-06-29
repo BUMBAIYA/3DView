@@ -7,7 +7,6 @@ import java.util.Random;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
-import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
@@ -15,8 +14,6 @@ import entities.Camera;
 import entities.Entity;
 import entities.Light;
 import entities.Player;
-import gui.GuiRenderer;
-import gui.GuiTexture;
 import models.RawModel;
 import models.TexturedModel;
 import objConverter.ModelData;
@@ -61,9 +58,9 @@ public class MainGameLoop {
 		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap, "heightmap");
 		terrains.add(terrain);
 	
-		Random random = new Random(352782);
+		Random random = new Random(32782);
 		
-		for (int i=0; i<20; i++) {
+		for (int i=0; i<25; i++) {
 			float x = random.nextFloat() * 150;
 			float z = random.nextFloat() * -150;
 			float y = terrain.getHeightOfTerrain(x, z);
@@ -76,7 +73,7 @@ public class MainGameLoop {
 		RawModel playerModel = loader.loadToVAO(playerData.getVertices(), playerData.getTextureCoords(), playerData.getNormals(), playerData.getIndices());
 		TexturedModel playerTexturedModel = new TexturedModel(playerModel, new ModelTexture(loader.loadTexture("rainbow")));
 		
-		Player player = new Player(playerTexturedModel, new Vector3f(100, 5, -120), 0, 0, 0, 0.5f);
+		Player player = new Player(playerTexturedModel, new Vector3f(100, 3, -120), 0, 0, 0, 0.5f);
 		entities.add(player);
 		Camera camera = new Camera(player);
 		
