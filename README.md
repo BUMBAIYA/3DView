@@ -30,7 +30,7 @@ Important
 
 1. Go to Window -> Preferences
 2. Now choose Java -> Build Path -> User Libraries and click on New...
-3. Type any name for the library like "LWJGL3"
+3. Type any name for the library like "LWJGL2"
 4. Select the newly made library
 5. Click on Add external JARs... and add all *.jar files from the place where you extracted the ZIP Bundle, without the artifacts with sources or javadoc in its name
 6. (Optional) For each \*.jar file (excluding the natives classified files) click on Source attachement -> Edit... and add the External location for the corresponding *-sources.jar file
