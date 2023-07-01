@@ -2,6 +2,10 @@
 
 3D OpenGL Renderer using LWJGL2
 
+## Preview
+
+![3DView2](https://github.com/BUMBAIYA/3DView/assets/85615075/08dfa2fa-a7bf-4839-84a7-2acf49724ead)
+
 ## Features ✨
 
 - Skybox
