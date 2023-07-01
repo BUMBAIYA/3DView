@@ -4,7 +4,7 @@
 
 ## Preview
 
-![3DView2](https://github.com/BUMBAIYA/3DView/assets/85615075/08dfa2fa-a7bf-4839-84a7-2acf49724ead)
+![3DView](https://github.com/BUMBAIYA/3DView/assets/85615075/48380edb-e307-4f50-a5eb-5a2360dd48d4)
 
 ## Features ✨
 
